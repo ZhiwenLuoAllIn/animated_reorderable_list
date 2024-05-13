@@ -5,12 +5,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+
 import '../component/drag_listener.dart';
 import '../model/motion_data.dart';
 import 'motion_list_base.dart';
 
 part '../component/drag_item.dart';
-
 part '../component/motion_animated_content.dart';
 
 typedef CustomAnimatedWidgetBuilder<E> = Widget Function(
@@ -825,6 +825,7 @@ class MotionBuilderState extends State<MotionBuilder>
     final Animation<double> sizeAnimation =
         outgoingItem.sizeAnimation ?? kAlwaysCompleteAnimation;
     return SizeTransition(
+        axis: widget.scrollDirection,
         sizeFactor: sizeAnimation,
         child: widget.removeAnimationBuilder(context, child, animation));
   }
@@ -835,6 +836,7 @@ class MotionBuilderState extends State<MotionBuilder>
     final Animation<double> sizeAnimation =
         incomingItem?.sizeAnimation ?? kAlwaysCompleteAnimation;
     return SizeTransition(
+        axis: widget.scrollDirection,
         sizeFactor: sizeAnimation,
         child: widget.insertAnimationBuilder(context, child, animation));
   }
