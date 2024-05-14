@@ -19,8 +19,8 @@ class ItemTile extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: 60,
-            width: MediaQuery.of(context).size.width,
+            height: 50,
+            width: 50,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Colors.primaries[index % Colors.primaries.length],
@@ -28,7 +28,7 @@ class ItemTile extends StatelessWidget {
             child: Center(
               child: Text(
                 'Item $index',
-                style: const TextStyle(fontSize: 25),
+                style: const TextStyle(fontSize: 12),
               ),
             ),
           ),

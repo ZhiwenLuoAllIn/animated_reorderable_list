@@ -504,10 +504,18 @@ class MotionBuilderState extends State<MotionBuilder>
       });
     } else {
       childrenMap[itemIndex] = motionData;
-      controller.forward().then<void>((_) {
-        _removeActiveItemAt(_incomingItems, incomingItem.itemIndex)!
-            .controller!
-            .dispose();
+      // [Feverever]
+      // controller.forward().then<void>((_) {
+      //   _removeActiveItemAt(_incomingItems, incomingItem.itemIndex)!
+      //       .controller!
+      //       .dispose();
+      // });
+      sizeController.forward().then((value) {
+        controller.forward().then<void>((_) {
+          _removeActiveItemAt(_incomingItems, incomingItem.itemIndex)!
+              .controller!
+              .dispose();
+        });
       });
     }
     setState(() {
@@ -825,7 +833,7 @@ class MotionBuilderState extends State<MotionBuilder>
     final Animation<double> sizeAnimation =
         outgoingItem.sizeAnimation ?? kAlwaysCompleteAnimation;
     return SizeTransition(
-        axis: widget.scrollDirection,
+        axis: scrollDirection,
         sizeFactor: sizeAnimation,
         child: widget.removeAnimationBuilder(context, child, animation));
   }
@@ -836,7 +844,7 @@ class MotionBuilderState extends State<MotionBuilder>
     final Animation<double> sizeAnimation =
         incomingItem?.sizeAnimation ?? kAlwaysCompleteAnimation;
     return SizeTransition(
-        axis: widget.scrollDirection,
+        axis: scrollDirection,
         sizeFactor: sizeAnimation,
         child: widget.insertAnimationBuilder(context, child, animation));
   }

@@ -1,10 +1,10 @@
 import 'dart:ui';
 
+import 'package:animated_reorderable_list/animated_reorderable_list.dart';
 import 'package:example/utils/extension.dart';
 import 'package:example/utils/item_card.dart';
 import 'package:example/utils/item_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:animated_reorderable_list/animated_reorderable_list.dart';
 
 class User {
   final String name;
@@ -33,6 +33,7 @@ class _HomePageState extends State<HomePage> {
     addedNumber += 1;
     setState(() {
       list.insert(1, User(name: "User $addedNumber", index: addedNumber));
+      // list.add(User(name: "User $addedNumber", index: addedNumber));
     });
   }
 
@@ -205,46 +206,52 @@ class _HomePageState extends State<HomePage> {
                                     },
                       */
                         )
-                    : AnimatedReorderableListView(
-                        items: list,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ItemTile(
-                              key: Key(list[index].name),
-                              index: list[index].index);
-                        },
-                        enterTransition: animations,
-                        exitTransition: animations,
-                        insertDuration: const Duration(milliseconds: 300),
-                        removeDuration: const Duration(milliseconds: 300),
-                        onReorder: (int oldIndex, int newIndex) {
-                          setState(() {
-                            final User user = list.removeAt(oldIndex);
-                            list.insert(newIndex, user);
-                          });
-                        },
-                        proxyDecorator: proxyDecorator
+                    : Align(
+                        child: SizedBox(
+                          height: 69,
+                          child: AnimatedReorderableListView(
+                              items: list,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (BuildContext context, int index) {
+                                return ItemTile(
+                                    key: Key(list[index].name),
+                                    index: list[index].index);
+                              },
+                              enterTransition: animations,
+                              exitTransition: animations,
+                              insertDuration: const Duration(milliseconds: 300),
+                              removeDuration: const Duration(milliseconds: 300),
+                              onReorder: (int oldIndex, int newIndex) {
+                                setState(() {
+                                  final User user = list.removeAt(oldIndex);
+                                  list.insert(newIndex, user);
+                                });
+                              },
+                              proxyDecorator: proxyDecorator
 
-                        /*  A custom builder that is for inserting items with animations.
-
-                              insertItemBuilder: (Widget child, Animation<double> animation){
-                                 return ScaleTransition(
-                                       scale: animation,
-                                       child: child,
-                                     );
-                                    },
-
-
-                      */
-                        /*  A custom builder that is for removing items with animations.
-
-                                  removeItemBuilder: (Widget child, Animation<double> animation){
+                              /*  A custom builder that is for inserting items with animations.
+                        
+                                  insertItemBuilder: (Widget child, Animation<double> animation){
                                      return ScaleTransition(
-                                       scale: animation,
-                                       child: child,
-                                     );
-                                    },
-                      */
+                                           scale: animation,
+                                           child: child,
+                                         );
+                                        },
+                        
+                        
+                          */
+                              /*  A custom builder that is for removing items with animations.
+                        
+                                      removeItemBuilder: (Widget child, Animation<double> animation){
+                                         return ScaleTransition(
+                                           scale: animation,
+                                           child: child,
+                                         );
+                                        },
+                          */
+                              ),
                         ),
+                      ),
               ),
             ],
           ),
