@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/cupertino.dart';
 
 abstract class AnimationEffect<T> {
@@ -62,8 +64,10 @@ class EffectEntry {
   }) {
     int beginT = begin.inMicroseconds, endT = end.inMicroseconds;
     return CurveTween(
-      curve: Interval(beginT / totalDuration.inMicroseconds,
-          endT / totalDuration.inMicroseconds,
+      curve: Interval(
+          beginT / totalDuration.inMicroseconds,
+          // Fix assertion issue.
+          math.min(endT / totalDuration.inMicroseconds, 1),
           curve: curve ?? this.curve),
     );
   }
