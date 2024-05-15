@@ -1,6 +1,7 @@
-import 'package:flutter/gestures.dart';
 import 'package:animated_reorderable_list/animated_reorderable_list.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
 import 'builder/motion_list_base.dart';
 import 'builder/motion_list_impl.dart';
 
@@ -53,6 +54,9 @@ class AnimatedReorderableListView<E extends Object> extends StatefulWidget {
   ///
   /// If you provide a specific duration for each AnimationEffect, it will override this [removeDuration].
   final Duration? removeDuration;
+
+  /// The duration of size transition.
+  final Duration? motionDuration;
 
   /// A callback used by [ReorderableList] to report that a list item has moved
   /// to a new position in the list.
@@ -197,6 +201,7 @@ class AnimatedReorderableListView<E extends Object> extends StatefulWidget {
       this.exitTransition,
       this.insertDuration,
       this.removeDuration,
+      this.motionDuration,
       this.onReorderStart,
       this.onReorderEnd,
       this.proxyDecorator,
@@ -246,6 +251,7 @@ class _AnimatedReorderableListViewState<E extends Object>
               exitTransition: widget.exitTransition,
               insertDuration: widget.insertDuration,
               removeDuration: widget.removeDuration,
+              motionDuration: widget.motionDuration,
               onReorder: widget.onReorder,
               onReorderStart: widget.onReorderStart,
               onReorderEnd: widget.onReorderEnd,

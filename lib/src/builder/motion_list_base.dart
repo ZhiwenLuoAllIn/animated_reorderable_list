@@ -1,7 +1,8 @@
+import 'package:animated_reorderable_list/animated_reorderable_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:animated_reorderable_list/animated_reorderable_list.dart';
 import 'package:flutter/material.dart';
+
 import 'motion_animated_builder.dart';
 
 typedef ItemBuilder<W extends Widget, E> = Widget Function(
@@ -26,6 +27,7 @@ abstract class MotionListBase<W extends Widget, E extends Object>
   final List<AnimationEffect>? exitTransition;
   final Duration? insertDuration;
   final Duration? removeDuration;
+  final Duration? motionDuration;
   final Axis scrollDirection;
   final SliverGridDelegate? sliverGridDelegate;
   final AnimatedWidgetBuilder? insertItemBuilder;
@@ -44,6 +46,7 @@ abstract class MotionListBase<W extends Widget, E extends Object>
       this.exitTransition,
       this.insertDuration,
       this.removeDuration,
+      this.motionDuration,
       required this.scrollDirection,
       this.sliverGridDelegate,
       this.insertItemBuilder,
@@ -106,6 +109,10 @@ abstract class MotionListBaseState<
   @nonVirtual
   @protected
   Duration get removeDuration => widget.removeDuration ?? exitDuration;
+
+  @nonVirtual
+  @protected
+  Duration get motionDuration => widget.motionDuration ?? kAnimationDuration;
 
   @protected
   @nonVirtual
@@ -186,13 +193,21 @@ abstract class MotionListBaseState<
     // Detect removed and updated items
     for (int i = oldList.length - 1; i >= 0; i--) {
       if (!newList.contains(oldList[i])) {
-        listKey.currentState!.removeItem(i, removeItemDuration: removeDuration);
+        listKey.currentState!.removeItem(
+          i,
+          removeItemDuration: removeDuration,
+          motionDuration: motionDuration,
+        );
       }
     }
     // Detect added items
     for (int i = 0; i < newList.length; i++) {
       if (!oldList.contains(newList[i])) {
-        listKey.currentState!.insertItem(i, insertDuration: insertDuration);
+        listKey.currentState!.insertItem(
+          i,
+          insertDuration: insertDuration,
+          motionDuration: motionDuration,
+        );
       }
     }
   }

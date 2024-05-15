@@ -442,7 +442,11 @@ class MotionBuilderState extends State<MotionBuilder>
     return index;
   }
 
-  void insertItem(int index, {required Duration insertDuration}) {
+  void insertItem(
+    int index, {
+    required Duration insertDuration,
+    required Duration motionDuration,
+  }) {
     assert(index >= 0);
     final int itemIndex = _indexToItemIndex(index);
     assert(itemIndex >= 0 && itemIndex <= _itemsCount);
@@ -459,7 +463,7 @@ class MotionBuilderState extends State<MotionBuilder>
       vsync: this,
     );
     final AnimationController sizeController = AnimationController(
-      duration: kAnimationDuration,
+      duration: motionDuration,
       vsync: this,
     );
 
@@ -523,7 +527,11 @@ class MotionBuilderState extends State<MotionBuilder>
     });
   }
 
-  void removeItem(int index, {required Duration removeItemDuration}) {
+  void removeItem(
+    int index, {
+    required Duration removeItemDuration,
+    required Duration motionDuration,
+  }) {
     assert(index >= 0);
     final int itemIndex = _indexToItemIndex(index);
     if (itemIndex < 0 || itemIndex >= _itemsCount) {
@@ -539,7 +547,7 @@ class MotionBuilderState extends State<MotionBuilder>
 
       final AnimationController sizeController = incomingItem?.sizeAnimation ??
           AnimationController(
-              vsync: this, duration: kAnimationDuration, value: 1.0);
+              vsync: this, duration: motionDuration, value: 1.0);
       final AnimationController controller = incomingItem?.controller ??
           AnimationController(
               duration: removeItemDuration, value: 1.0, vsync: this)

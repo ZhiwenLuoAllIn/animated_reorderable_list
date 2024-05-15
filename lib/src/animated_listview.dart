@@ -1,6 +1,7 @@
+import 'package:animated_reorderable_list/animated_reorderable_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
-import 'package:animated_reorderable_list/animated_reorderable_list.dart';
+
 import 'builder/motion_list_base.dart';
 import 'builder/motion_list_impl.dart';
 
@@ -36,6 +37,9 @@ class AnimatedListView<E extends Object> extends StatelessWidget {
   ///
   /// If you provide a specific duration for each AnimationEffect, it will override this [removeDuration].
   final Duration? removeDuration;
+
+  /// The duration of size transition.
+  final Duration? motionDuration;
 
   /// The axis along which the scroll view scrolls.
   ///
@@ -142,6 +146,7 @@ class AnimatedListView<E extends Object> extends StatelessWidget {
       this.exitTransition,
       this.insertDuration,
       this.removeDuration,
+      this.motionDuration,
       this.scrollDirection = Axis.vertical,
       this.padding,
       this.reverse = false,
@@ -180,6 +185,7 @@ class AnimatedListView<E extends Object> extends StatelessWidget {
               exitTransition: exitTransition,
               insertDuration: insertDuration,
               removeDuration: removeDuration,
+              motionDuration: motionDuration,
               scrollDirection: scrollDirection,
               insertItemBuilder: insertItemBuilder,
               removeItemBuilder: removeItemBuilder,
